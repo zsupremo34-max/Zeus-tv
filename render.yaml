@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: zeus-ia-whatsapp
+    runtime: python
+    plan: free
+    buildCommand: ""
+    startCommand: "python bot.py"
+    healthCheckPath: /health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: WHATSAPP_VERIFY_TOKEN
+        sync: false
+      - key: META_APP_SECRET
+        sync: false
+      - key: WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: WHATSAPP_GRAPH_VERSION
+        value: v23.0
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: BOT_NAME
+        value: Zeus IA
