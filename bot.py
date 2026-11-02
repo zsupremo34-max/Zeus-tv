@@ -216,8 +216,9 @@ class Handler(BaseHTTPRequestHandler):
                 expected = 'sha256=' + hmac.new(APP_SECRET.encode(), raw, hashlib.sha256).hexdigest()
                 if not hmac.compare_digest(signature, expected):
                     return self.respond(401, b'Invalid signature')
-            elif os.getenv('ENVIRONMENT','production').lower() == 'production':
-                print('WARNING: META_APP_SECRET is missing; webhook signature is not checked.', flush=True)
+            else:
+                print('Webhook rejected: META_APP_SECRET is not configured.', flush=True)
+                return self.respond(503, b'Webhook is not configured')
             data = json.loads(raw)
             # Acknowledge after request parsing and reply processing. Meta retries on failures;
             # duplicate message ids are recorded so repeats do not send duplicate replies.
